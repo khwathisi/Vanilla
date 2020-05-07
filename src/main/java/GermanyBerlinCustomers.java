@@ -1,13 +1,17 @@
-import java.nio.channels.ScatteringByteChannel;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-public class AllCustomers {
-    public void allCustomers(Connection connection)
+public class GermanyBerlinCustomers {
+    public void germanyBerlinCustomers(Connection connection)
     {
         try
         {
             Statement statement = connection.createStatement();
-            ResultSet set =  statement.executeQuery("select * from customers order by customerid");
+            String SQL = "select * from Customers\n" +
+                    "        where Country = 'Germany' and City = 'Berlin'";
+            ResultSet set =  statement.executeQuery(SQL);
 
             while (set.next())
             {
@@ -21,8 +25,7 @@ public class AllCustomers {
                         set.getString("city")+" "+
                         set.getString("country"));
             }
-        } catch(SQLException e)
-        {
+        }catch (SQLException e){
             System.out.println("Error: " + e);
         }
     }
